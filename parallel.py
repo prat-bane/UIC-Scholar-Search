@@ -27,7 +27,7 @@ model_lock= Lock()
 # Load models globally so threads share them (Saving RAM)
 print("Loading Models...")
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-client = genai.Client(api_key="AIzaSyBx0z6zP252ms_iZrYKLXRNMOxQQYt1OZA")
+client = genai.Client(api_key="")
 
 
 # --- 2. WORKER FUNCTION (Runs inside a thread) ---
