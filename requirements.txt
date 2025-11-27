@@ -1,0 +1,12 @@
+spacy
+pytextrank
+requests
+beautifulsoup4
+pymupdf
+lxml
+grobid-client-python
+keybert 
+sentence-transformers
+google-genai
+neo4j
+einops
