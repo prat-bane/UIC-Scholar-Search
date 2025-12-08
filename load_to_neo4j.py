@@ -6,7 +6,7 @@ import glob
 # --- Configuration ---
 URI = "neo4j://localhost:7687"
 AUTH = ("neo4j", "test1234")
-JSON_DIR = r"D:\VSCodeProjects\UIC-Scholar-Search\output_xml"
+JSON_DIR = "paper_json" # Or the correct relative/absolute path
 
 driver = GraphDatabase.driver(URI, auth=AUTH)
 
@@ -58,17 +58,20 @@ def load_paper_optimized(tx, doc, paper_id):
     """
     query = """
     // 1. Merge the Paper (Metadata Only)
-    MERGE (p:Paper {paperId: $paper_id})
+    MERGE (p:Paper {paperId: $id})
     SET p.title = $title,
-        p.filename = $filename
-        // REMOVED: p.abstract = $abstract 
+        p.filename = $filename,
+        p.year = $year,
+        p.link = $link
     
-    // 2. Handle Authors
+    // 2. Handle UIC Authors
     WITH p
-    UNWIND $authors as auth_data
-    WITH p, trim(coalesce(auth_data.forename, "") + " " + coalesce(auth_data.surname, "")) as full_name
+    UNWIND $uic_authors as uic_auth
+    WITH p, uic_auth, split(uic_auth.name, ',') AS name_parts
+    WITH p, uic_auth, trim(name_parts[1]) + " " + trim(name_parts[0]) AS full_name
     WHERE full_name <> "" 
-    MERGE (a:Author {name: full_name}) 
+    MERGE (a:Author {name: full_name})
+    SET a:UIC_Author, a.department = uic_auth.department, a.title = uic_auth.title
     MERGE (a)-[:AUTHORED]->(p)
 
     // 3. Handle Topics (Keywords)
@@ -82,8 +85,8 @@ def load_paper_optimized(tx, doc, paper_id):
     // 4. Handle Sections (Searchable Content)
     WITH p
     UNWIND $sections as sec
-    // Create Unique Section ID
-    WITH p, sec, $paper_id + "_" + sec.name as sec_id
+    // Create a unique Section ID
+    WITH p, sec, $id + "_" + sec.name as sec_id
     
     MERGE (s:Section {id: sec_id})
     SET s.name = sec.name,
@@ -94,11 +97,12 @@ def load_paper_optimized(tx, doc, paper_id):
     """
     
     tx.run(query, 
-           paper_id=paper_id,
+           id=paper_id,
            filename=doc["filename"],
+           year=doc.get("year"),
+           link=doc.get("link"),
            title=doc.get("title", "Unknown Title"),
-           # REMOVED: abstract argument
-           authors=doc.get("authors", []),   
+           uic_authors=doc.get("uic_authors", []),
            keywords=doc.get("keywords", []),
            sections=doc.get("sections", [])
     )
@@ -117,7 +121,7 @@ def load_all(json_dir):
                     doc = json.load(f)
                 
                 # ID Generation
-                paper_id = doc["filename"].replace(".grobid.tei.xml", "")
+                paper_id = doc["id"]
                 
                 session.execute_write(load_paper_optimized, doc, paper_id)
                 
