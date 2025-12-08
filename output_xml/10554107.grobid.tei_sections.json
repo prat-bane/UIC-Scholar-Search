@@ -15,11 +15,18 @@
       "surname": "Asudeh"
     }
   ],
-  "abstract": "The grand goal of data-driven decision systems is to help make decisions easier, more accurate, at a higher scale, and also just. However, data-driven algorithms are only as good as the data they work with. Yet, data sets, especially those with social data, often do not represent minorities. The paucity of training data is a perpetual problem for AI, and the outcome of ML models for cases not represented in their training data is often not reliable. Hence, without properly addressing the lack of representation issues in data, we cannot expect AI-based societal solutions to have responsible and trustworthy outcomes. This paper focuses on data coverage as a data-centric approach for identifying and resolving misrepresentation of minorities in data. To achieve this goal, we propose novel algorithms that (a) identify and resolve insufficient data coverage across data with different modalities and (b) use lack of representation information to generate data-centric reliability warnings.",
   "keywords": [
-    "Data coverage",
-    "Data-driven algorithms",
+    "Data-driven decision systems",
+    "Algorithms",
+    "AI",
     "ML models",
+    "Data coverage",
+    "Data-centric approach",
+    "Modalities",
+    "Data-centric reliability warnings",
+    "Autonomous vehicles",
+    "Predictive policing",
+    "Criminal justice",
     "Representation Bias"
   ],
   "sections": [

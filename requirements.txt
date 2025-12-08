@@ -9,4 +9,5 @@ keybert
 sentence-transformers
 google-genai
 neo4j
-einops
+fastapi
+uvicorn

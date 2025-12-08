@@ -19,12 +19,11 @@
       "surname": "Das"
     }
   ],
-  "abstract": "In this paper, we initiate research in explaining matchings. In particular, we consider the large-scale two-sided matching applications where preferences of the users are specified as (ranking) functions over a set of attributes and matching recommendations are derived as top-k. We consider multiple natural explanation questions, concerning the users of these systems. Observing the competitive nature of these environments, we propose multiple Shapley-based approaches for explanation. Besides exact algorithms, we propose a sampling-based approximation algorithm with provable guarantees to overcome the combinatorial complexity of the exact Shapley computation. Our extensive experiments on real-world and synthetic data sets validate the usefulness of our proposal and confirm the efficiency and accuracy of our algorithms. 1 tinder.com; okcupid.com; bumble.com  2 linkedin.com; indeed.com; ziprecruiter.com  3 As we shall explain in § 5, matching has many different formulations, properties, and applications. In this paper, our scope is limited only to bipartite many-many matching for two-sided online platforms.",
   "keywords": [
-    "Shapley values",
-    "top-k",
     "ranking functions",
-    "approximation algorithm",
+    "top-k",
+    "Shapley values",
+    "sampling-based approximation algorithm",
     "bipartite graph",
     "linear function"
   ],

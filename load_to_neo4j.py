@@ -10,54 +10,102 @@ JSON_DIR = r"D:\VSCodeProjects\UIC-Scholar-Search\output_xml"
 
 driver = GraphDatabase.driver(URI, auth=AUTH)
 
-def load_paper_optimized(tx, doc):
+def setup_database(driver):
     """
-    Loads a single paper JSON into Neo4j using your specific constraints.
+    Run this once to ensure indexes exist.
+    """
+    queries = [
+        "CREATE CONSTRAINT paper_id IF NOT EXISTS FOR (p:Paper) REQUIRE p.paperId IS UNIQUE",
+        "CREATE CONSTRAINT author_name IF NOT EXISTS FOR (a:Author) REQUIRE a.name IS UNIQUE",
+        "CREATE CONSTRAINT topic_name IF NOT EXISTS FOR (t:Topic) REQUIRE t.name IS UNIQUE",
+        "CREATE CONSTRAINT section_id IF NOT EXISTS FOR (s:Section) REQUIRE s.id IS UNIQUE",
+        
+        # VECTOR INDEX (Critical for Hybrid Search)
+        """
+        CREATE VECTOR INDEX section_embedding_index IF NOT EXISTS
+        FOR (s:Section) ON (s.embedding)
+        OPTIONS {indexConfig: {
+         `vector.dimensions`: 384,
+         `vector.similarity_function`: 'cosine'
+        }}
+        """,
+        """
+        CREATE FULLTEXT INDEX section_text_index IF NOT EXISTS
+        FOR (s:Section) ON EACH [s.text]
+        """,
+        """
+        CREATE FULLTEXT INDEX topic_name_index IF NOT EXISTS
+        FOR (t:Topic) ON EACH [t.name]
+        """,
+        """
+        CREATE FULLTEXT INDEX author_name_index IF NOT EXISTS
+        FOR (a:Author) ON EACH [a.name]
+        """
+
+    ]
+    print(" Checking Database Indexes...")
+    with driver.session() as session:
+        for q in queries:
+            try:
+                session.run(q)
+            except Exception as e:
+                print(f" Index note: {e}")
+
+def load_paper_optimized(tx, doc, paper_id):
+    """
+    Loads a single paper JSON into Neo4j.
+    UPDATED: Abstract removed from Parent Node.
     """
     query = """
-    // 1. Merge the Paper 
-    // Uses your 'paper_id_unique' constraint (Paper -> paperId)
+    // 1. Merge the Paper (Metadata Only)
     MERGE (p:Paper {paperId: $paper_id})
     SET p.title = $title,
-        p.abstract = $abstract,
-        p.introduction = $introduction,
         p.filename = $filename
+        // REMOVED: p.abstract = $abstract 
     
     // 2. Handle Authors
-    // Uses your 'author_name_unique' constraint (Author -> name)
     WITH p
     UNWIND $authors as auth_data
-    // Combine names safely
     WITH p, trim(coalesce(auth_data.forename, "") + " " + coalesce(auth_data.surname, "")) as full_name
     WHERE full_name <> "" 
     MERGE (a:Author {name: full_name}) 
     MERGE (a)-[:AUTHORED]->(p)
 
     // 3. Handle Topics (Keywords)
-    // Uses your 'topic_name_unique' constraint (Topic -> name)
     WITH p
     UNWIND $keywords as kw
     WITH p, toLower(trim(kw)) as clean_kw
     WHERE clean_kw <> ""
     MERGE (t:Topic {name: clean_kw})
     MERGE (p)-[:HAS_TOPIC]->(t)
-    """
+
+    // 4. Handle Sections (Searchable Content)
+    WITH p
+    UNWIND $sections as sec
+    // Create Unique Section ID
+    WITH p, sec, $paper_id + "_" + sec.name as sec_id
     
-    # Create the ID cleanly in Python
-    paper_id = doc["filename"].replace(".grobid.tei.xml", "")
+    MERGE (s:Section {id: sec_id})
+    SET s.name = sec.name,
+        s.text = sec.text,
+        s.embedding = sec.embedding
+    
+    MERGE (p)-[:HAS_SECTION]->(s)
+    """
     
     tx.run(query, 
            paper_id=paper_id,
            filename=doc["filename"],
            title=doc.get("title", "Unknown Title"),
-           abstract=doc.get("abstract", ""),
-           introduction=doc.get("introduction", ""),
-           # Pass the raw lists directly to Cypher
+           # REMOVED: abstract argument
            authors=doc.get("authors", []),   
-           keywords=doc.get("keywords", [])
+           keywords=doc.get("keywords", []),
+           sections=doc.get("sections", [])
     )
 
 def load_all(json_dir):
+    setup_database(driver)
+
     paths = glob.glob(str(Path(json_dir) / "*.json"))
     print(f"Found {len(paths)} JSON files. Starting import...")
 
@@ -68,8 +116,10 @@ def load_all(json_dir):
                 with open(path, "r", encoding="utf-8") as f:
                     doc = json.load(f)
                 
-                # Execute the transaction
-                session.execute_write(load_paper_optimized, doc)
+                # ID Generation
+                paper_id = doc["filename"].replace(".grobid.tei.xml", "")
+                
+                session.execute_write(load_paper_optimized, doc, paper_id)
                 
                 count += 1
                 if count % 50 == 0:
@@ -77,7 +127,7 @@ def load_all(json_dir):
             except Exception as e:
                 print(f"Error processing {Path(path).name}: {e}")
 
-    print(f"Finished! Total papers loaded: {count}")
+    print(f"🎉 Finished! Total papers loaded: {count}")
 
 if __name__ == "__main__":
     try:

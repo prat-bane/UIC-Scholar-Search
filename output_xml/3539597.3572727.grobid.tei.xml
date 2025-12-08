@@ -7,7 +7,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 		<fileDesc>
 			<titleStmt>
 				<title level="a" type="main">Next-generation Challenges of Responsible Data Integration</title>
-				<funder ref="#_JnJYNe4 #_fExGqdX #_yG6JKDq #_rMNkEJB">
+				<funder ref="#_gB3RJWG #_9aqEdmv #_G97YSVU #_Kq2dPuk">
 					<orgName type="full">National Science Foundation</orgName>
 				</funder>
 				<funder>
@@ -71,7 +71,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 		</fileDesc>
 		<encodingDesc>
 			<appInfo>
-				<application version="0.8.2" ident="GROBID" when="2025-11-27T03:07+0000">
+				<application version="0.8.2" ident="GROBID" when="2025-11-27T23:17+0000">
 					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
 					<label type="revision">a91ee48</label>
 					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=1, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
@@ -110,16 +110,16 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 <div><head>ACKNOWLEDGEMENTS</head><p><rs type="person">Abolfazl Asudeh</rs> was supported in part by the <rs type="funder">National Science Foundation</rs> under grant <rs type="grantNumber">2107290</rs> and by the <rs type="funder">Google research scholar</rs> award. <rs type="person">H. V. Jagadish</rs> was supported in part by the <rs type="funder">National Science Foundation</rs> under grants <rs type="grantNumber">2106176</rs> and <rs type="grantNumber">1934565</rs>. <rs type="person">Fatemeh Nargesian</rs> was supported in part by the <rs type="funder">National Science Foundation</rs> under grant <rs type="grantNumber">2107050</rs>.</p></div>
 			</div>
 			<listOrg type="funding">
-				<org type="funding" xml:id="_JnJYNe4">
+				<org type="funding" xml:id="_gB3RJWG">
 					<idno type="grant-number">2107290</idno>
 				</org>
-				<org type="funding" xml:id="_fExGqdX">
+				<org type="funding" xml:id="_9aqEdmv">
 					<idno type="grant-number">2106176</idno>
 				</org>
-				<org type="funding" xml:id="_yG6JKDq">
+				<org type="funding" xml:id="_G97YSVU">
 					<idno type="grant-number">1934565</idno>
 				</org>
-				<org type="funding" xml:id="_rMNkEJB">
+				<org type="funding" xml:id="_Kq2dPuk">
 					<idno type="grant-number">2107050</idno>
 				</org>
 			</listOrg>

@@ -7,7 +7,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 		<fileDesc>
 			<titleStmt>
 				<title level="a" type="main">Coverage-based Data-centric Approaches for Responsible and Trustworthy AI *</title>
-				<funder ref="#_GGQqMBj">
+				<funder ref="#_8hztQTh">
 					<orgName type="full">National Science Foundation</orgName>
 				</funder>
 			</titleStmt>
@@ -56,7 +56,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 		</fileDesc>
 		<encodingDesc>
 			<appInfo>
-				<application version="0.8.2" ident="GROBID" when="2025-11-27T03:07+0000">
+				<application version="0.8.2" ident="GROBID" when="2025-11-27T23:17+0000">
 					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
 					<label type="revision">a91ee48</label>
 					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=1, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
@@ -101,7 +101,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 <div><p>* This research was supported by the <rs type="funder">National Science Foundation</rs> under grant No. <rs type="grantNumber">2107290</rs>.</p></div>
 			</div>
 			<listOrg type="funding">
-				<org type="funding" xml:id="_GGQqMBj">
+				<org type="funding" xml:id="_8hztQTh">
 					<idno type="grant-number">2107290</idno>
 				</org>
 			</listOrg>

@@ -11,7 +11,6 @@
       "surname": "Caragea"
     }
   ],
-  "abstract": "We explore different ways to utilize positionbased cross-attention in seq2seq networks to enable length generalization in algorithmic tasks. We show that a simple approach of interpolating the original and reversed encoded representations combined with relative attention allows nearperfect length generalization for both forward and reverse lookup tasks or copy tasks that had been generally hard to tackle. We also devise harder diagnostic tasks where the relative distance of the ideal attention position varies with timestep. In such settings, the simple interpolation trick with relative attention is not sufficient. We introduce novel variants of location attention building on top of Dubois et al. (2020) to address the new diagnostic tasks. We also show the benefits of our approaches for length generalization in",
   "keywords": [
     "position-based cross-attention",
     "seq2seq networks",
@@ -20,11 +19,15 @@
     "interpolation",
     "encoded representations",
     "relative attention",
+    "forward lookup",
+    "reverse lookup",
+    "copy tasks",
+    "diagnostic tasks",
     "location attention",
     "Neural seq2seq",
     "encoder-decoder models",
     "synthetic probing tasks",
-    "lookup table task",
+    "lookup table",
     "repeated copy (ReCopy)",
     "OneStep attention",
     "monotonic location attention",

@@ -7,7 +7,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 		<fileDesc>
 			<titleStmt>
 				<title level="a" type="main">Bi-LSTM-CRF Sequence Labeling for Keyphrase Extraction from Scholarly Documents</title>
-				<funder ref="#_RQMdgfQ #_7fAEeun #_JKre68w #_sJWgYKN">
+				<funder ref="#_YxzsQgy #_XGAT9hZ #_srysnYx #_uEkM98d">
 					<orgName type="full">National Science Foundation</orgName>
 					<orgName type="abbreviated">NSF</orgName>
 				</funder>
@@ -60,7 +60,7 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 		</fileDesc>
 		<encodingDesc>
 			<appInfo>
-				<application version="0.8.2" ident="GROBID" when="2025-11-27T03:07+0000">
+				<application version="0.8.2" ident="GROBID" when="2025-11-27T23:17+0000">
 					<desc>GROBID - A machine learning software for extracting information from scholarly documents</desc>
 					<label type="revision">a91ee48</label>
 					<label type="parameters">startPage=-1, endPage=-1, consolidateCitations=0, consolidateHeader=1, consolidateFunders=0, includeRawAffiliations=false, includeRawCitations=false, includeRawCopyrights=false, generateTeiIds=false, generateTeiCoordinates=[], sentenceSegmentation=false, flavor=null</label>
@@ -118,16 +118,16 @@ xsi:schemaLocation="http://www.tei-c.org/ns/1.0 https://raw.githubusercontent.co
 <div><head>ACKNOWLEDGEMENTS</head><p>We thank <rs type="funder">NSF</rs> for support from grants <rs type="grantNumber">IIS-1802358</rs>, <rs type="grantNumber">IIS-1813571</rs>, <rs type="grantNumber">CNS-1853919</rs>, and <rs type="grantNumber">CNS-1823288</rs>, which supported this research.</p></div>
 			</div>
 			<listOrg type="funding">
-				<org type="funding" xml:id="_RQMdgfQ">
+				<org type="funding" xml:id="_YxzsQgy">
 					<idno type="grant-number">IIS-1802358</idno>
 				</org>
-				<org type="funding" xml:id="_7fAEeun">
+				<org type="funding" xml:id="_XGAT9hZ">
 					<idno type="grant-number">IIS-1813571</idno>
 				</org>
-				<org type="funding" xml:id="_JKre68w">
+				<org type="funding" xml:id="_srysnYx">
 					<idno type="grant-number">CNS-1853919</idno>
 				</org>
-				<org type="funding" xml:id="_sJWgYKN">
+				<org type="funding" xml:id="_uEkM98d">
 					<idno type="grant-number">CNS-1823288</idno>
 				</org>
 			</listOrg>
