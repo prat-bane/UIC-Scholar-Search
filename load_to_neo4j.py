@@ -13,6 +13,7 @@ driver = GraphDatabase.driver(URI, auth=AUTH)
 def setup_database(driver):
     """
     Run this once to ensure indexes exist.
+    REMOVED try/except to expose errors immediately.
     """
     queries = [
         "CREATE CONSTRAINT paper_id IF NOT EXISTS FOR (p:Paper) REQUIRE p.paperId IS UNIQUE",
@@ -20,7 +21,7 @@ def setup_database(driver):
         "CREATE CONSTRAINT topic_name IF NOT EXISTS FOR (t:Topic) REQUIRE t.name IS UNIQUE",
         "CREATE CONSTRAINT section_id IF NOT EXISTS FOR (s:Section) REQUIRE s.id IS UNIQUE",
         
-        # VECTOR INDEX (Critical for Hybrid Search)
+        # VECTOR INDEX
         """
         CREATE VECTOR INDEX section_embedding_index IF NOT EXISTS
         FOR (s:Section) ON (s.embedding)
@@ -29,6 +30,9 @@ def setup_database(driver):
          `vector.similarity_function`: 'cosine'
         }}
         """,
+        
+        # FULLTEXT INDEXES
+        # Note: This syntax works for Neo4j 5.x. 
         """
         CREATE FULLTEXT INDEX section_text_index IF NOT EXISTS
         FOR (s:Section) ON EACH [s.text]
@@ -41,15 +45,16 @@ def setup_database(driver):
         CREATE FULLTEXT INDEX author_name_index IF NOT EXISTS
         FOR (a:Author) ON EACH [a.name]
         """
-
     ]
-    print(" Checking Database Indexes...")
+    
+    print("⚙️ Configuring Database...")
     with driver.session() as session:
         for q in queries:
-            try:
-                session.run(q)
-            except Exception as e:
-                print(f" Index note: {e}")
+            # RUN WITHOUT TRY/EXCEPT so errors crash the script visibly
+            print(f"   Running: {q[:50]}...") 
+            session.run(q)
+            
+    print("✅ Database configured successfully.")
 
 def load_paper_optimized(tx, doc, paper_id):
     """
